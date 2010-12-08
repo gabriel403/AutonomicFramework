@@ -11,6 +11,10 @@ abstract class Autonomic_Controller {
         $this->_view = $view;
     }
 
+    function _getView(){
+        return $this->_view;
+    }
+
     function  __toString() {
         return $this->_view;
     }

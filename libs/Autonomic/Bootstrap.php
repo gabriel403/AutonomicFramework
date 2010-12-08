@@ -18,6 +18,7 @@ class Autonomic_Bootstrap {
                 ;
             }
         }
+        !isset($contmeth)?$contmeth=array("Index","Index"):null;
         Zend_Debug::dump($contmeth);
         switch (count($contmeth)) {
             case 1:
@@ -44,18 +45,18 @@ class Autonomic_Bootstrap {
         if (!method_exists($controller, $action)) {
             trigger_error("No action called $action exists in class " . get_class($controller));
         }
-        $controller->_setView(implode(DIRECTORY_SEPARATOR, array("Views", $controllerName, $method)));
+        $controller->_setView(implode(DIRECTORY_SEPARATOR, array("Views", $controllerName, $method)).".php");
         $method_call_return = call_user_func(array($controller, $action));
-        echo $controller;
+        //echo $controller;
+        include $controller->_getView();
     }
 
 }
 
 function __autoload($className) {
-    echo "I been called $className<br />";
     $fileExists = false;
     $paths = explode("_", $className);
-    $pathAndFile = implode("/", $paths) . ".php";
+    $pathAndFile = implode(DIRECTORY_SEPARATOR, $paths) . ".php";
     //require_once $pathAndFile;
     $handle = @fopen($pathAndFile, 'r', TRUE);
 
@@ -67,5 +68,5 @@ function __autoload($className) {
         return true;
     }
     trigger_error("Unable to find $className in PHP PATH " . get_include_path() . " Tried $pathAndFile");
-    return false;
+    return true;
 }
