@@ -7,30 +7,26 @@ class Autonomic_Bootstrap {
     }
 
     function run() {
-        Zend_Debug::dump($_SERVER);
-        Zend_Debug::dump($_REQUEST);
         $queryString = trim($_SERVER['QUERY_STRING']);
         $requestURI = strlen($queryString) > 0 ? str_replace("?$queryString", "", $_SERVER['REQUEST_URI']) : $_SERVER['REQUEST_URI'];
         $contmeth1 = explode("/", $requestURI);
         foreach ($contmeth1 as $key => $value) {
             if (strlen(trim($value))) {
                 $contmeth[] = $value;
-                ;
             }
         }
-        !isset($contmeth)?$contmeth=array("Index","Index"):null;
-        Zend_Debug::dump($contmeth);
+        !isset($contmeth) ? $contmeth = array("Index", "Index") : null;
         switch (count($contmeth)) {
             case 1:
                 $controllerName = ucfirst($contmeth[0]);
                 $method = "Index";
-                $this->checkAndCallControllerMethod($controllerName, $method);
+                $this->render($controllerName, $method);
                 break;
 
             case 2:
                 $controllerName = ucfirst($contmeth[0]);
                 $method = ucfirst($contmeth[1]);
-                $this->checkAndCallControllerMethod($controllerName, $method);
+                $this->render($controllerName, $method);
                 break;
 
             default:
@@ -38,17 +34,19 @@ class Autonomic_Bootstrap {
         }
     }
 
-    function checkAndCallControllerMethod($controllerName, $method) {
+    function render($controllerName, $method) {
         $className = "Controllers_" . $controllerName;
         $controller = new $className();
         $action = $method . "Action";
         if (!method_exists($controller, $action)) {
             trigger_error("No action called $action exists in class " . get_class($controller));
         }
-        $controller->_setView(implode(DIRECTORY_SEPARATOR, array("Views", $controllerName, $method)).".php");
+        $controller->_setView(implode(DIRECTORY_SEPARATOR, array("Views", $controllerName, $method)) . ".phtml");
         $method_call_return = call_user_func(array($controller, $action));
         //echo $controller;
-        include $controller->_getView();
+        @include implode(DIRECTORY_SEPARATOR, array("Layouts", "header")) . ".phtml";
+        echo $controller->_getView();
+        @include implode(DIRECTORY_SEPARATOR, array("Layouts", "footer")) . ".phtml";
     }
 
 }
