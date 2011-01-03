@@ -16,7 +16,7 @@ class Autonomic_View {
         if (array_key_exists($name, $this->data)) {
             return $this->data[$name];
         }
-        
+
         $trace = debug_backtrace();
         trigger_error(
                 'Undefined property via __get(): ' . $name .

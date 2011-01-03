@@ -1,4 +1,5 @@
 <?php
+
 // Define path to root directory
 defined('ROOT_PATH')
         || define('ROOT_PATH', realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..'));
@@ -14,14 +15,13 @@ defined('APP_ENV')
 
 // Add libs to php path
 set_include_path(
-    implode(
-        PATH_SEPARATOR,
-        array(
+        implode(
+                PATH_SEPARATOR, array(
             realpath(ROOT_PATH . DIRECTORY_SEPARATOR . 'libs'),
             APP_PATH,
             get_include_path()
+                )
         )
-    )
 );
 require_once 'Autonomic' . DIRECTORY_SEPARATOR . 'Bootstrap.php';
 $ab = new Autonomic_Bootstrap();
