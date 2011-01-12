@@ -42,8 +42,8 @@ class Autonomic_Bootstrap {
             trigger_error("No action called $action exists in class " . get_class($controller));
         }
         $controller->_setView(implode(DIRECTORY_SEPARATOR, array("Views", $controllerName, $method)) . ".phtml");
-        $method_call_return = call_user_func(array($controller, $action));
-        //echo $controller;
+        echo "<br />";
+        $controller->$action();
         @include implode(DIRECTORY_SEPARATOR, array("Layouts", "header")) . ".phtml";
         echo $controller->_getView();
         @include implode(DIRECTORY_SEPARATOR, array("Layouts", "footer")) . ".phtml";
