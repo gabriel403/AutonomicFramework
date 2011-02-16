@@ -2,11 +2,11 @@
 
 class Autonomic_View {
 
+    private $data = array();
+
     public function __construct($viewName) {
         $this->_viewName = $viewName;
     }
-
-    private $data = array();
 
     public function __set($name, $value) {
         $this->data[$name] = $value;
@@ -18,16 +18,15 @@ class Autonomic_View {
         }
 
         $trace = debug_backtrace();
-        trigger_error(
+        throw new Exception(
                 'Undefined property via __get(): ' . $name .
                 ' in ' . $trace[0]['file'] .
                 ' on line ' . $trace[0]['line'], E_USER_NOTICE);
-        return null;
     }
 
     public function __toString() {
         ob_start();
-        include $this->_viewName;
+        require $this->_viewName;
         $output = ob_get_contents();
         ob_end_clean();
         return $output;

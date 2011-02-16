@@ -13,6 +13,11 @@ defined('APP_PATH')
 defined('APP_ENV')
         || define('APP_ENV', (getenv('APP_ENV') ? getenv('APP_ENV') : 'production'));
 
+if( APP_ENV != "production" ) {
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+}
+
 // Add libs to php path
 set_include_path(
         implode(
