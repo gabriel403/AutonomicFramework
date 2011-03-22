@@ -9,6 +9,7 @@ class Autonomic_Bootstrap {
             str_replace("?$queryString", "", $_SERVER['REQUEST_URI']) :
             $_SERVER['REQUEST_URI'];
         
+        str_ireplace(ROOT_URI, "", requestURI);
         $controllerMethod1 = explode("/", $requestURI);
         
         foreach ($controllerMethod1 as $value) {
