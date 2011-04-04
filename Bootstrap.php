@@ -22,8 +22,8 @@ class Autonomic_Bootstrap {
         
         switch (count($controllerMethod)) {
             case 1:
-                $controllerName = ucfirst($controllerMethod[0]);
-                $method = "Index";
+                $controllerName = method_exists("Controllers_Index", ucfirst($controllerMethod[0]))? "Index":ucfirst($controllerMethod[0]);
+                $method = method_exists("Controllers_Index", ucfirst($controllerMethod[0]))? ucfirst($controllerMethod[0]):"Index";
                 $this->render($controllerName, $method);
                 break;
 
