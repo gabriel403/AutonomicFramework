@@ -22,7 +22,8 @@ class Autonomic_Bootstrap {
             if( array_key_exists("everyrun", $sectionvalues) ) {
                 if( is_array($sectionvalues["everyrun"]) ) {
                     foreach( $sectionvalues["everyrun"] as $functioncall ) {
-                        $functioncall();
+                        $args = explode("::", $functioncall);
+                        $args[0]::$args[1]();
                     }
                 }
             }
