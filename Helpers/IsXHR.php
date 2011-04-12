@@ -12,7 +12,7 @@
  */
 class Autonomic_Helpers_IsXHR {
     public function IsXHR() {
-        return (bool) strcasecmp($_SERVER['HTTP_X_REQUESTED_WITH'], "xmlhttprequest");
+        return strcasecmp($_SERVER['HTTP_X_REQUESTED_WITH'], "xmlhttprequest") == 0;
     }
 }
 
