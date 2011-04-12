@@ -16,7 +16,6 @@ class Autonomic_Bootstrap {
                 $controllerMethod[] = $value;
             }
         }
-
         !isset($controllerMethod) ? $controllerMethod = array("Index", "Index") : null;
 
         switch( count($controllerMethod) ) {
@@ -41,6 +40,8 @@ class Autonomic_Bootstrap {
 
         $config = parse_ini_file("Configs/config.ini", true);
         foreach( $config as $section => $sectionvalues ) {
+            if( Autonomic_Helpers_IsXHR::IsXHR() )
+                continue;
             if( array_key_exists("everyrun", $sectionvalues) ) {
                 if( is_array($sectionvalues["everyrun"]) ) {
                     foreach( $sectionvalues["everyrun"] as $functioncall ) {
@@ -50,7 +51,7 @@ class Autonomic_Bootstrap {
                 }
             }
         }
-        
+
         $this->render($controllerName, $method);
     }
 
