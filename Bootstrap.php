@@ -16,6 +16,7 @@ class Autonomic_Bootstrap {
                 $controllerMethod[] = $value;
             }
         }
+
         !isset($controllerMethod) ? $controllerMethod = array("Index", "Index") : null;
 
         switch( count($controllerMethod) ) {
@@ -35,6 +36,8 @@ class Autonomic_Bootstrap {
                 break;
         }
 
+        $_SESSION['controller'] = $controllerName;
+        $_SESSION['method'] = $method;
 
         $config = parse_ini_file("Configs/config.ini", true);
         foreach( $config as $section => $sectionvalues ) {
