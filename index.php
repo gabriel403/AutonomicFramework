@@ -2,8 +2,9 @@
 
 // Define path to root directory
 defined('ROOT_PATH')
-        || define('ROOT_PATH', realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..'));
-        
+        || define('ROOT_PATH',
+                realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..'));
+
 defined('ROOT_URI')
         || define('ROOT_URI', '');
 
@@ -14,7 +15,8 @@ defined('APP_PATH')
 
 // Define application environment
 defined('APP_ENV')
-        || define('APP_ENV', (getenv('APP_ENV') ? getenv('APP_ENV') : 'production'));
+        || define('APP_ENV',
+                (getenv('APP_ENV') ? getenv('APP_ENV') : 'production'));
 
 if( APP_ENV != "production" ) {
     ini_set('display_errors', 1);
@@ -24,7 +26,8 @@ if( APP_ENV != "production" ) {
 // Add libs to php path
 set_include_path(
         implode(
-                PATH_SEPARATOR, array(
+                PATH_SEPARATOR,
+                array(
             realpath(ROOT_PATH . DIRECTORY_SEPARATOR . 'includes'),
             APP_PATH,
             get_include_path()
@@ -32,6 +35,6 @@ set_include_path(
         )
 );
 require_once 'Autonomic' . DIRECTORY_SEPARATOR . 'Bootstrap.php';
-$ab = new Autonomic_Bootstrap();
+$ab = Autonomic_Bootstrap::getInstance();
 $ab->run();
 

@@ -1,7 +1,19 @@
 <?php
 
 class Autonomic_Bootstrap {
+    
+    private static $m_pInstance;
+    
+    public static function getInstance() 
+    { 
+        if (!self::$m_pInstance) 
+        { 
+            self::$m_pInstance = new Autonomic_Bootstrap(); 
+        } 
 
+        return self::$m_pInstance; 
+    }
+    
     function run() {
         $queryString = trim($_SERVER['QUERY_STRING']);
         $requestURI = strlen($queryString) > 0 ?
@@ -35,10 +47,12 @@ class Autonomic_Bootstrap {
                 break;
         }
 
-        $_SESSION['controller'] = $controllerName;
-        $_SESSION['method'] = $method;
-
         $config = parse_ini_file("Configs/config.ini", true);
+        
+        $this->config = $config;
+        $this->controller = $controllerName;
+        $this->method = $method;
+
         foreach( $config as $section => $sectionvalues ) {
             if( Autonomic_Helpers_IsXHR::IsXHR() )
                 continue;
