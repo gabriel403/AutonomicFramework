@@ -16,6 +16,25 @@ class Autonomic_Bootstrap {
                 $controllerMethod[] = $value;
             }
         }
+        !isset($controllerMethod) ? $controllerMethod = array("Index", "Index") : null;
+
+        switch( count($controllerMethod) ) {
+            case 1:
+                $controllerName = method_exists("Controllers_Index",
+                                ucfirst($controllerMethod[0]) . "Action") ? "Index" : ucfirst($controllerMethod[0]);
+                $method = method_exists("Controllers_Index",
+                                ucfirst($controllerMethod[0]) . "Action") ? ucfirst($controllerMethod[0]) : "Index";
+                break;
+
+            case 2:
+                $controllerName = ucfirst($controllerMethod[0]);
+                $method = ucfirst($controllerMethod[1]);
+                break;
+
+            default:
+                break;
+        }
+
 
         $config = parse_ini_file("Configs/config.ini", true);
         foreach( $config as $section => $sectionvalues ) {
@@ -28,26 +47,8 @@ class Autonomic_Bootstrap {
                 }
             }
         }
-        !isset($controllerMethod) ? $controllerMethod = array("Index", "Index") : null;
-
-        switch( count($controllerMethod) ) {
-            case 1:
-                $controllerName = method_exists("Controllers_Index",
-                                ucfirst($controllerMethod[0]) . "Action") ? "Index" : ucfirst($controllerMethod[0]);
-                $method = method_exists("Controllers_Index",
-                                ucfirst($controllerMethod[0]) . "Action") ? ucfirst($controllerMethod[0]) : "Index";
-                $this->render($controllerName, $method);
-                break;
-
-            case 2:
-                $controllerName = ucfirst($controllerMethod[0]);
-                $method = ucfirst($controllerMethod[1]);
-                $this->render($controllerName, $method);
-                break;
-
-            default:
-                break;
-        }
+        
+        $this->render($controllerName, $method);
     }
 
     function render( $controllerName, $method ) {
