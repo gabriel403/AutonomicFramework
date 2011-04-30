@@ -61,7 +61,7 @@ class Autonomic_Bootstrap {
         $this->controller = $controllerName;
         $this->method = $method;
 
-        foreach( $config as $section => $sectionvalues ) {
+        foreach( self::$configInstance as $section => $sectionvalues ) {
             if( Autonomic_Helpers_IsXHR::IsXHR() )
                 continue;
             if( array_key_exists("everyrun", $sectionvalues) ) {
