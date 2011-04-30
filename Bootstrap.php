@@ -51,6 +51,8 @@ class Autonomic_Bootstrap {
 				break;
 
 			default:
+				$controllerName = "Index";
+				$method = "Index";
 				break;
 		}
 
