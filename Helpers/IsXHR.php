@@ -11,9 +11,13 @@
  * @author gabriel
  */
 class Autonomic_Helpers_IsXHR {
-    public function IsXHR() {
-        return strcasecmp($_SERVER['HTTP_X_REQUESTED_WITH'], "xmlhttprequest") == 0;
-    }
+
+	public function IsXHR() {
+		if ( array_key_exists("HTTP_X_REQUESTED_WITH", $_SERVER) )
+			return strcasecmp($_SERVER['HTTP_X_REQUESTED_WITH'], "xmlhttprequest") == 0;
+		return false;
+	}
+
 }
 
 ?>

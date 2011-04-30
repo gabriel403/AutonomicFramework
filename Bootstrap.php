@@ -2,16 +2,27 @@
 
 class Autonomic_Bootstrap {
     
-    private static $m_pInstance;
+    private static $selfInstance;
+    private static $configInstance;
     
     public static function getInstance() 
     { 
-        if (!self::$m_pInstance) 
+        if (!self::$selfInstance) 
         { 
-            self::$m_pInstance = new Autonomic_Bootstrap(); 
+            self::$selfInstance = new Autonomic_Bootstrap(); 
         } 
 
-        return self::$m_pInstance; 
+        return self::$selfInstance; 
+    }
+
+    public static function getConfig() 
+    { 
+        if (!self::$configInstance) 
+        { 
+            self::$configInstance = parse_ini_file("Configs/config.ini", true);
+        } 
+
+        return self::$configInstance; 
     }
     
     function run() {
@@ -47,9 +58,6 @@ class Autonomic_Bootstrap {
                 break;
         }
 
-        $config = parse_ini_file("Configs/config.ini", true);
-        
-        $this->config = $config;
         $this->controller = $controllerName;
         $this->method = $method;
 
