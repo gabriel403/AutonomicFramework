@@ -48,9 +48,9 @@ class Autonomic_Dbtable {
 		$whereVals = array();
 
 		if ( count($wheres) > 0 ) {
-			if ( count($wheres) == 1 && !is_array($wheres[0]) )
+			if ( !is_array($wheres[0]) )
 				$wheres = array($wheres);
-
+			
 			foreach ( $wheres as $where ) {
 				switch ( count($where) ) {
 					case 2:
