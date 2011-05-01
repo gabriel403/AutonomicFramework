@@ -26,7 +26,7 @@ class Autonomic_View {
 
     public function __toString() {
         ob_start();
-        require $this->_viewName;
+        include $this->_viewName;
         $output = ob_get_contents();
         ob_end_clean();
         return $output;

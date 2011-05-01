@@ -92,7 +92,6 @@ class Autonomic_Dbtable {
 		$cols = is_array($cols) ? implode(", ", $cols) : $cols;
 
 		$sql = "SELECT $cols FROM " . $this->_tableName . " $sql;";
-		echo "$sql\n";
 		$sth = $this->dbh->prepare($sql,
 				array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		$sth->execute($whereVals);
